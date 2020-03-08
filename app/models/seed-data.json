@@ -1,0 +1,58 @@
+{
+  "users": {
+    "_model": "User",
+    "homer": {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "email": "homer@simpson.com",
+      "password": "secret"
+    }
+  },
+  "categories": {
+    "_model": "Category",
+    "North West": {
+      "_id": "5e63d0bfa17b1f23e0319552",
+      "category": "North West"
+    },
+    "North East": {
+      "_id": "5e63d0bfa17b1f23e0319553",
+      "category": "North East"
+    },
+    "Mid West": {
+      "_id": "5e63d0bfa17b1f23e0319554",
+      "category": "Mid West"
+    },
+    "East": {
+      "_id": "5e63d0bfa17b1f23e0319555",
+      "category": "East"
+    },
+    "South": {
+      "_id": "5e63d0bfa17b1f23e0319556",
+      "category": "South"
+    }
+    },
+  "islands": {
+    "_model": "Island",
+    "one": {
+      "name": "Bear Island",
+      "description": "Bear Haven, a natural harbour of naval importance for centuries, separates this massive island from the mainland. The permanent population is about 200. The distinctly mountainous W end of the island, opposite Castletown. Bearhaven, is the most convenient to reach. There are many ‘Private’ signs about the W end, but the Beara Way gives access to the interior. Walking on the high ground is lovely, along little-used waymarked trails and the scenery is wonderful.",
+      "member": "->users.homer",
+      "category": "->categories.South",
+      "image":"https://res.cloudinary.com/dboqg9n9q/image/upload/v1583693208/bear_zjcnf0.png"
+    },
+    "two": {
+      "name": "Muck Island",
+      "description": "A medium sized island, about 1km N/S, located 300m off the mainland near the beautiful little harbour of Portmuck.The island is interesting and has a nice mixture of wilderness habitats. Coastal grasses dominate the central part and the island rises steeply from W to E. There is a beach of mixed sand and shingle on its western side and a rocky bar extends shorewards off its southern point.",
+      "member": "->users.homer",
+      "category": "->categories.North East",
+      "image": "https://res.cloudinary.com/dboqg9n9q/image/upload/v1583695393/muck_tujvic.jpg"
+    },
+    "three": {
+      "name": "Lambay Island",
+      "description": "The best plan for a day trip is a slingshot from Loughshinny (excellent parking), lunching at the island during the LW slack. Landing The island is privately owned by the Revelstoke family and no landing should take place. This is particularly true of the W side of the island where the main harbour and housing is situated. The owners value their privacy,",
+      "member": "->users.homer",
+      "category": "->categories.East",
+      "image": "https://res.cloudinary.com/dboqg9n9q/image/upload/v1583695931/wallaby_palsmq.jpg"
+    }
+  }
+}

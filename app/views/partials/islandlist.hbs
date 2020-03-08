@@ -1,0 +1,33 @@
+<section class="ui raised segment">
+    <div class="ui grid">
+        <article>
+            <table class="ui celled table segment">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th class="six wide">Description</th>
+                    <th>Member</th>
+                    <th>Category</th>
+                    <th>Image</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each islands}}
+                    <tr>
+                        <td> {{name}} </td>
+                        <td> {{description}} </td>
+                        <td> {{member.firstName}} {{member.lastName}} </td>
+                        <td> {{category.category}} </td>
+                        <td><img class="ui large image" src="{{image}}"></td>
+                        <td> <a href="/island_info/{{_id}}"><button class="ui button">Edit</button></a> </td>
+                        <td> <a href="/deleteIsland/{{_id}}"><button class="ui button">Delete</button></a> </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </article>
+    </div>
+
+</section>

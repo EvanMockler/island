@@ -1,0 +1,40 @@
+<section class="ui raised segment">
+    <div class="ui grid ">
+        <div class="ui form six wide column">
+            <div class="ui stacked segment">
+                <form class="uk-form-horizontal" action="/uploadfile" method="POST" enctype="multipart/form-data">
+                    <div class="field">
+                    <div class="text">Enter Island Name</div>
+                    <input type="text" name="name">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea  name="description"></textarea>
+                    </div>
+                    <div class="grouped inline fields">
+                        <h3> Select Category </h3>
+                        {{#each categories }}
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="category" value="{{category}}">
+                                    <label>{{category}}</label>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-horizontal-text">Select Image</label>
+                            <div class="uk-form-controls">
+                                <input type="file" class="uk-input" name="imagefile" accept="image/png, image/jpeg">
+                            </div>
+                        </div>
+                    <button class="ui blue submit button">Add</button>
+                </form>
+            </div>
+        </div>
+        <aside class="ten wide column">
+            <img src="images/dalkey.jpg" class="ui rounded huge image">
+        </aside>
+    </div>
+</section>

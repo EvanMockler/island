@@ -1,0 +1,27 @@
+{{> mainmenu _id="island_info"}}
+
+<section class="ui raised segment">
+    <div class="ui celled form segment">
+        <form action="/updateIsland/{{island._id}}" method="POST">
+            <div class="field">
+                <label>Name</label> <input value="{{island.name}}" type="text" name="name">
+            </div>
+            <div class="field">
+                <label>Description</label> <input value="{{island.description}}" type="text" name="description">
+            </div>
+            <div class="grouped inline fields">
+                <h3> Select Category </h3>
+                {{#each categories }}
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="category" value="{{category}}">
+                            <label>{{category}}</label>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <button class="ui blue submit button">Update</button>
+        </form>
+        {{> error }}
+    </div>
+</section>

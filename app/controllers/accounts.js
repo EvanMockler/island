@@ -21,12 +21,12 @@ const Accounts = {
     auth: false,
     validate: {
       payload: {
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
-        email: Joi.string()
+        firstName: Joi.string().regex(/^[A-Z][a-z-']{0,12}$/), // Names up to 13 characters allowed, hyphen and apostrophe
+        lastName: Joi.string().regex(/^[A-Z][a-z-']{0,16}$/), // Names up to 17 characters allowed, hyphen and apostrophe
+        email: Joi.string().regex(/^\S+@\S+.+[A-Za-z]$/)
           .email()
           .required(),
-        password: Joi.string().required()
+        password: Joi.string().regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/), //password must be over 8 characters and an uppercase & lowercase letter, a number
       },
       options: {
         abortEarly: false
@@ -73,10 +73,10 @@ const Accounts = {
     auth: false,
     validate: {
       payload: {
-        email: Joi.string()
+        email: Joi.string().regex(/^\S+@\S+.+[A-Za-z]$/)
           .email()
           .required(),
-        password: Joi.string().required()
+        password: Joi.string().regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/), //password must be over 8 characters and an uppercase & lowercase letter, a number
       },
       options: {
         abortEarly: false
@@ -121,12 +121,12 @@ const Accounts = {
   updateSettings: {
     validate: {
       payload: {
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
-        email: Joi.string()
+        firstName: Joi.string().regex(/^[A-Z][a-z-']{0,12}$/),
+        lastName: Joi.string().regex(/^[A-Z][a-z-']{0,16}$/),
+        email: Joi.string().regex(/^\S+@\S+.+[A-Za-z]$/)
           .email()
           .required(),
-        password: Joi.string().required()
+        password: Joi.string().regex(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/)
       },
       options: {
         abortEarly: false

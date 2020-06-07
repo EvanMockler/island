@@ -12,12 +12,15 @@ suite('User API tests', function () {
 
   const islandLogger = new IslandLogger(fixtures.islandLogger);
 
-  setup(async function () {
+  suiteSetup(async function() {
     await islandLogger.deleteAllUsers();
+    const returnedUser = await islandLogger.createUser(newUser);
+    const response = await islandLogger.authenticate(newUser);
   });
 
-  teardown(async function () {
+  suiteTeardown(async function() {
     await islandLogger.deleteAllUsers();
+    islandLogger.clearAuth();
   });
 
   test('create a user', async function () {
@@ -49,28 +52,43 @@ suite('User API tests', function () {
   });
 
   test('get all users', async function () {
+    await islandLogger.deleteAllUsers();
+    await islandLogger.createUser(newUser);
+    await islandLogger.authenticate(newUser);
     for (let u of users) {
       await islandLogger.createUser(u);
     }
 
     const allUsers = await islandLogger.getUsers();
-    assert.equal(allUsers.length, users.length);
+    assert.equal(allUsers.length, users.length + 1);
   });
 
   test('get users detail', async function () {
+    await islandLogger.deleteAllUsers();
+    const user = await islandLogger.createUser(newUser);
+    await islandLogger.authenticate(newUser);
     for (let u of users) {
       await islandLogger.createUser(u);
     }
 
+    const testUser = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password
+    };
+    users.unshift(testUser);
     const allUsers = await islandLogger.getUsers();
     for (var i = 0; i < users.length; i++) {
       assert(_.some([allUsers[i]], users[i]), 'returnedUser must be a superset of newUser');
     }
   });
 
-  test('get all users empty', async function () {
+  test('get all users empty', async function() {
+    await islandLogger.deleteAllUsers();
+    const user = await islandLogger.createUser(newUser);
+    await islandLogger.authenticate(newUser);
     const allUsers = await islandLogger.getUsers();
-    assert.equal(allUsers.length, 0);
+    assert.equal(allUsers.length, 1);
   });
-
 });

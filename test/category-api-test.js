@@ -9,8 +9,20 @@ suite('Category API tests', function () {
 
   let categories = fixtures.categories;
   let newCategory = fixtures.newCategory;
+  let newUser = fixtures.newUser;
 
   const islandLogger = new IslandLogger('http://LAPTOP-H3TFJSOQ:3000');
+
+  suiteSetup(async function() {
+    await islandLogger.deleteAllUsers();
+    const returnedUser = await islandLogger.createUser(newUser);
+    const response = await islandLogger.authenticate(newUser);
+  });
+
+  suiteTeardown(async function() {
+    await islandLogger.deleteAllUsers();
+    islandLogger.clearAuth();
+  });
 
   setup(async function () {
     await islandLogger.deleteAllCategories();

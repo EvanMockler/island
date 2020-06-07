@@ -2,11 +2,40 @@
 
 const User = require('../models/user');
 const Boom = require('@hapi/boom');
+const utils = require('./utils.js');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const Users = {
 
-  find: {
+  authenticate: {
     auth: false,
+    handler: async function (request, h) {
+      try {
+        const user = await User.findOne({ email: request.payload.email });
+        if (!user) {
+          return Boom.unauthorized('User not found');
+        }
+        else{
+          const isMatch = await user.comparePassword(request.payload.password);
+          if(isMatch == true){
+            const token = utils.createToken(user);
+            return h.response({ success: true, token: token }).code(201);
+          }
+          else{
+            return Boom.unauthorized('Invalid password');
+          }
+        }
+      } catch (err) {
+        return Boom.notFound('internal db failure');
+      }
+    }
+    },
+
+  find: {
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       const users = await User.find();
       return users;
@@ -14,7 +43,9 @@ const Users = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       try {
         const user = await User.findOne({ _id: request.params.id });
@@ -32,6 +63,8 @@ const Users = {
     auth: false,
     handler: async function(request, h) {
       const newUser = new User(request.payload);
+      const hash = await bcrypt.hash(request.payload.password, saltRounds);
+      newUser.password=hash;
       const user = await newUser.save();
       if (user) {
         return h.response(user).code(201);
@@ -41,7 +74,9 @@ const Users = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       await User.deleteMany({});
       return { success: true };
@@ -49,7 +84,9 @@ const Users = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       const user = await User.deleteOne({ _id: request.params.id });
       if (user) {

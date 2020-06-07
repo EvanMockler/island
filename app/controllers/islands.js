@@ -15,7 +15,8 @@ const Islands = {
     report: {
         handler: async function(request, h) {
             const user = await User.findById(request.auth.credentials.id);
-            const islands = await Island.find({member:user}).populate('member').populate('category').lean();
+            //const islands = await Island.find({member:user}).populate('member').populate('category').lean();
+            const islands = await Island.find().populate('member').populate('category').lean();
 
             try {
                 return h.view('report', {
